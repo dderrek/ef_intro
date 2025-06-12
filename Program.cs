@@ -1,5 +1,6 @@
 ﻿
 using EFGetStarted;
+using EFGetStarted.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

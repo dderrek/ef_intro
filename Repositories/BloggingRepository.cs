@@ -1,5 +1,4 @@
-﻿
-namespace EFGetStarted
+﻿namespace EFGetStarted.Repositories
 {
     public class BloggingRepository
     {
