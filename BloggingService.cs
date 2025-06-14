@@ -22,5 +22,17 @@ namespace EFGetStarted
             var createdEntry = bloggingDbContext.Blogs.Add(blog);
             return bloggingDbContext.SaveChanges() == 1;
         }
+
+        public bool DeletePost(int postId)
+        {
+            var postToDelete = bloggingDbContext.Posts.Where(x => x.PostId == postId).FirstOrDefault();
+            if (postToDelete == null)
+            {
+                return false;
+            }
+
+            bloggingDbContext.Posts.Remove(postToDelete);
+            return bloggingDbContext.SaveChanges() == 1;
+        }
     }
 }

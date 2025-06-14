@@ -53,5 +53,26 @@ namespace EFGetStarted.Controllers
                 return StatusCode(500, new { success = false, message = "An error occurred." });
             }
         }
+
+        [Route("delete")]
+        [HttpDelete]
+        public IActionResult DeletePost([FromQuery] int postId)
+        {
+            try
+            {
+                var deletionSuccessful = bloggingService.DeletePost(postId);
+                return Ok(deletionSuccessful);
+            }
+            catch (DbUpdateException dbEx)
+            {
+                logger.LogError("Database update failed while deleting the post: {@dbEx}", dbEx);
+                return StatusCode(500, new { success = false, message = "Database update failed." });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("An unexpected error occurred while deleting the post: {@ex}", ex);
+                return StatusCode(500, new { success = false, message = "An error occurred." });
+            }
+        }
     }
 }
