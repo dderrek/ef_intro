@@ -17,10 +17,10 @@ namespace EFGetStarted
             return bloggingDbContext.SaveChanges() == 1;
         }
 
-        public void AddBlog(Blog blog)
+        public bool AddBlog(Blog blog)
         {
-            this.bloggingDbContext.Blogs.Add(blog);
-            bloggingDbContext.SaveChanges();
+            var createdEntry = bloggingDbContext.Blogs.Add(blog);
+            return bloggingDbContext.SaveChanges() == 1;
         }
     }
 }
