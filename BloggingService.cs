@@ -11,11 +11,10 @@ namespace EFGetStarted
             this.bloggingDbContext = bloggingDbContext;
         }
 
-        public Guid AddPost([FromBody] Post post)
+        public bool AddPost([FromBody] Post post)
         {
-            bloggingDbContext.Posts.Add(post);
-            bloggingDbContext.SaveChanges();
-            return Guid.Empty;
+            var createdEntry = bloggingDbContext.Posts.Add(post);
+            return bloggingDbContext.SaveChanges() == 1;
         }
 
         public void AddBlog(Blog blog)
