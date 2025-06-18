@@ -52,5 +52,28 @@ namespace EFGetStarted.Controllers
                 return StatusCode(500, new { success = false, message = "An error occurred." });
             }
         }
+
+        [Route("delete/{blogId}")]
+        [HttpDelete]
+        public IActionResult DeleteBlog([FromRoute] int blogId)
+        {
+            try
+            {
+                var deletionSuccessful = bloggingService.DeleteBlog(blogId);
+                return deletionSuccessful ?
+                    Ok(deletionSuccessful) :
+                    StatusCode(500, new { success = false, message = "An unexpected error occurred." }); ;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                logger.LogError("Database update failed while deleting the blog: {@dbEx}", dbEx);
+                return StatusCode(500, new { success = false, message = "Database update failed." });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("An unexpected error occurred while deleting the blog: {@ex}", ex);
+                return StatusCode(500, new { success = false, message = "An error occurred." });
+            }
+        }
     }
 }

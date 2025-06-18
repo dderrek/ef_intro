@@ -54,14 +54,16 @@ namespace EFGetStarted.Controllers
             }
         }
 
-        [Route("delete")]
+        [Route("delete/{postId}")]
         [HttpDelete]
-        public IActionResult DeletePost([FromQuery] int postId)
+        public IActionResult DeletePost([FromRoute] int postId)
         {
             try
             {
                 var deletionSuccessful = bloggingService.DeletePost(postId);
-                return Ok(deletionSuccessful);
+                return deletionSuccessful ?
+                    Ok(deletionSuccessful) :
+                    StatusCode(500, new { success = false, message = "An unexpected error occurred." }); ;
             }
             catch (DbUpdateException dbEx)
             {
