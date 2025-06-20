@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFGetStarted.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFGetStarted
 {

@@ -1,4 +1,6 @@
-﻿namespace EFGetStarted.Repositories
+﻿using EFGetStarted.Models;
+
+namespace EFGetStarted.Repositories
 {
     public class BloggingRepository
     {

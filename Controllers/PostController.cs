@@ -1,4 +1,5 @@
-﻿using EFGetStarted.Repositories;
+﻿using EFGetStarted.Models;
+using EFGetStarted.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -33,14 +34,14 @@ namespace EFGetStarted.Controllers
 
         [Route("add")]
         [HttpPost]
-        public IActionResult AddPost([FromBody] Post post)
+        public IActionResult AddPost([FromBody] PostCreate post)
         {
             try
             {
-                bloggingService.AddPost(post);
-
-                logger.LogInformation("Post successfully added: {@Post}", post);
-                return Ok(new { success = true, message = "Post added successfully." });
+                var creationSuccessful = bloggingService.AddPost(post);
+                return creationSuccessful ?
+                    Ok(creationSuccessful) :
+                    StatusCode(500, new { success = false, message = "An unexpected error occurred." });
             }
             catch (DbUpdateException dbEx)
             {
@@ -63,7 +64,7 @@ namespace EFGetStarted.Controllers
                 var deletionSuccessful = bloggingService.DeletePost(postId);
                 return deletionSuccessful ?
                     Ok(deletionSuccessful) :
-                    StatusCode(500, new { success = false, message = "An unexpected error occurred." }); ;
+                    StatusCode(500, new { success = false, message = "An unexpected error occurred." });
             }
             catch (DbUpdateException dbEx)
             {

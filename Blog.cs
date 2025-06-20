@@ -1,4 +1,6 @@
-﻿namespace EFGetStarted
+﻿using EFGetStarted.Models;
+
+namespace EFGetStarted
 {
     public class Blog
     {

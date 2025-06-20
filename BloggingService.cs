@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EFGetStarted.Models;
 
 namespace EFGetStarted
 {
@@ -11,9 +11,22 @@ namespace EFGetStarted
             this.bloggingDbContext = bloggingDbContext;
         }
 
-        public bool AddPost([FromBody] Post post)
+        public bool AddPost(PostCreate post)
         {
-            var createdEntry = bloggingDbContext.Posts.Add(post);
+            var matchingBlog = bloggingDbContext.Blogs.Where(x => x.BlogId == post.BlogId).FirstOrDefault();
+            if (matchingBlog == null)
+            {
+                return false;
+            }
+            var newEntry = new Post
+            {
+                PostId = post.PostId,
+                Content = post.Content,
+                Title = post.Title,
+                BlogId = post.BlogId,
+                Blog = matchingBlog
+            };
+            var createdEntry = bloggingDbContext.Posts.Add(newEntry);
             return bloggingDbContext.SaveChanges() == 1;
         }
 
